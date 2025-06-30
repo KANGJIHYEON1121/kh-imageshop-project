@@ -2,7 +2,7 @@ package com.kh.imageshop.mapper;
 
 import java.util.List;
 
-import com.kh.imageshop.common.CodeLabelValue;
+import com.kh.imageshop.common.domain.CodeLabelValue;
 
 public interface CodeMapper {
     // 그룹코드 목록 조회

@@ -4,6 +4,6 @@
 <mapper namespace="com.kh.imageshop.mapper.CodeMapper">
     <!-- 그룹코드 목록 조회 -->
     <select id="getCodeGroupList"
-        resultType="com.kh.imageshop.common.CodeLabelValue"> SELECT group_code AS value, group_name
-        AS label FROM code_group WHERE use_yn = 'Y' ORDER BY group_name </select>
+        resultType="com.kh.imageshop.common.domain.CodeLabelValue"> SELECT group_code AS value,
+        group_name AS label FROM code_group WHERE use_yn = 'Y' ORDER BY group_name </select>
 </mapper>
