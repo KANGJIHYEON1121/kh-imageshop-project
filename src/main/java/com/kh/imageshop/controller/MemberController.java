@@ -76,4 +76,44 @@ public class MemberController {
         model.addAttribute("list", service.list());
         return "user/list";
     }
+
+    // 상세 페이지
+    @GetMapping("/read")
+    public String read(int userNo, Model model) throws Exception {
+        // 직업코드 목록을 조회하여 뷰에 전달
+        String groupCode = "A00";
+        List<CodeLabelValue> jobList = codeService.getCodeList(groupCode);
+
+        model.addAttribute("jobList", jobList);
+        model.addAttribute(service.read(userNo));
+        return "user/read";
+    }
+
+    // 수정 페이지
+    @GetMapping("/modify")
+    public String modifyForm(int userNo, Model model) throws Exception {
+        // 직업코드 목록을 조회하여 뷰에 전달
+        String groupCode = "A00";
+        List<CodeLabelValue> jobList = codeService.getCodeList(groupCode);
+
+        model.addAttribute("jobList", jobList);
+        model.addAttribute(service.read(userNo));
+        return "user/modify";
+    }
+
+    // 수정 처리
+    @PostMapping("/modify")
+    public String modify(Member member, RedirectAttributes rttr) throws Exception {
+        service.modify(member);
+        rttr.addFlashAttribute("msg", "SUCCESS");
+        return "redirect:/user/list";
+    }
+
+    // 삭제 처리
+    @PostMapping("/remove")
+    public String remove(int userNo, RedirectAttributes rttr) throws Exception {
+        service.remove(userNo);
+        rttr.addFlashAttribute("msg", "SUCCESS");
+        return "redirect:/user/list";
+    }
 }
