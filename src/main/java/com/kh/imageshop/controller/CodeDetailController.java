@@ -55,20 +55,22 @@ public class CodeDetailController {
 
     // 상세 페이지
     @GetMapping("/read")
-    public void read(CodeDetail codeDetail, Model model) throws Exception {
+    public String read(CodeDetail codeDetail, Model model) throws Exception {
         model.addAttribute(codeDetailService.read(codeDetail));
         // 그룹코드 목록을 조회하여 뷰에 전달
         List<CodeLabelValue> groupCodeList = codeService.getCodeGroupList();
         model.addAttribute("groupCodeList", groupCodeList);
+        return "codedetail/read";
     }
 
     // 수정 페이지
     @GetMapping("/modify")
-    public void modifyForm(CodeDetail codeDetail, Model model) throws Exception {
+    public String modifyForm(CodeDetail codeDetail, Model model) throws Exception {
         model.addAttribute(codeDetailService.read(codeDetail));
         // 그룹코드 목록을 조회하여 뷰에 전달
         List<CodeLabelValue> groupCodeList = codeService.getCodeGroupList();
         model.addAttribute("groupCodeList", groupCodeList);
+        return "codedetail/modify";
     }
 
     // 수정 처리

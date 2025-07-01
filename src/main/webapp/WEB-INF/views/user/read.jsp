@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-pageEncoding="UTF-8" %> <%@ taglib prefix="form"
+pageEncoding="UTF-8" %> <%@ taglib prefix="c"
+uri="http://java.sun.com/jsp/jstl/core" %> <%@ taglib prefix="fmt"
+uri="http://java.sun.com/jsp/jstl/fmt" %> <%@ taglib prefix="form"
 uri="http://www.springframework.org/tags/form" %> <%@ taglib prefix="spring"
 uri="http://www.springframework.org/tags" %>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -16,8 +18,8 @@ uri="http://www.springframework.org/tags" %>
     <jsp:include page="/WEB-INF/views/common/header.jsp" />
     <jsp:include page="/WEB-INF/views/common/menu.jsp" />
     <div align="center">
-      <h2><spring:message code="codedetail.header.modify" /></h2>
-      <form:form modelAttribute="codeDetail" action="modify">
+      <h2><spring:message code="codedetail.header.read" /></h2>
+      <form:form modelAttribute="codeDetail">
         <table>
           <tr>
             <td><spring:message code="codedetail.groupCode" /></td>
@@ -31,55 +33,68 @@ uri="http://www.springframework.org/tags" %>
               />
             </td>
             <td>
-              <font color="red">
-                <form:errors path="groupCode" />
-              </font>
+              <font color="red"><form:errors path="groupCode" /></font>
             </td>
           </tr>
           <tr>
             <td><spring:message code="codedetail.codeValue" /></td>
+            <td><form:input path="codeValue" readonly="true" /></td>
             <td>
-              <form:input path="codeValue" readonly="true"/>
-            </td>
-            <td>
-              <font color="red">
-                <form:errors path="codeValue" />
-              </font>
+              <font color="red"><form:errors path="codeValue" /></font>
             </td>
           </tr>
           <tr>
             <td><spring:message code="codedetail.codeName" /></td>
+            <td><form:input path="codeName" readonly="true" /></td>
             <td>
-              <form:input path="codeName" />
-            </td>
-            <td>
-              <font color="red">
-                <form:errors path="codeName" />
-              </font>
+              <font color="red"><form:errors path="codeName" /></font>
             </td>
           </tr>
         </table>
       </form:form>
       <div>
-        <button type="submit" id="btnModify">
-          <spring:message code="action.modify" />
+        <button type="submit" id="btnEdit">
+          <spring:message code="action.edit" />
+        </button>
+        <button type="submit" id="btnRemove">
+          <spring:message code="action.remove" />
         </button>
         <button type="submit" id="btnList">
           <spring:message code="action.list" />
         </button>
       </div>
-    </div>
-    <jsp:include page="/WEB-INF/views/common/footer.jsp" />
 
+      <jsp:include page="/WEB-INF/views/common/footer.jsp" />
+    </div>
     <script>
       $(document).ready(function () {
         var formObj = $("#codeDetail");
-        $("#btnModify").on("click", function () {
+        $("#btnEdit").on("click", function () {
+          formObj.attr("action", "/codedetail/modify");
+          formObj.attr("method", "get");
           formObj.submit();
+
+          var groupCode = $("#groupCode");
+          var groupCodeVal = groupCode.val();
+
+          var codeValue = $("#codeValue");
+          var codeValueVal = codeValue.val();
+          self.location =
+            "modify?groupCode=" +
+            groupCodeVal +
+            "&" +
+            "codeValue=" +
+            codeValueVal;
         });
-        $("#btnList").on("click", function () {
-          self.location = "list";
-        });
+        
+        $("#btnRemove").on("click", function () {
+          formObj.attr("action", "remove");
+          formObj.submit();
+          });
+
+          $("#btnList").on("click", function () {
+            self.location = "list";
+          });
       });
     </script>
   </body>
